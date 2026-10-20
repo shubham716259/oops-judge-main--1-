@@ -1,0 +1,1809 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard - Code Karo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       Code Karo Design System Tokens
+       Midnight Graphite (#111210) & Electric Coral (#FF795E)
+       ========================================================================== */
+    :root {
+      /* Surface & Canvas System */
+      --bg: #111210;               /* Main background */
+      --surface: #1B1B19;          /* Card background */
+      --surface-2: #292824;        /* Elevated surface (inputs, tracks, nested panels) */
+      --surface-hover: #33312B;    /* Interactive hover surface */
+      --border: #34332F;           /* Structural border */
+      --border-hover: #484640;     /* Focused / hovered border */
+      --border-subtle: rgba(255, 255, 255, 0.05);
+
+      /* Typography Ink */
+      --text: #F5F3EF;             /* Primary text */
+      --muted: #A7A39B;            /* Secondary text */
+      --subtle: #6D6962;           /* Tertiary / placeholder text */
+
+      /* Accents */
+      --accent: #FF795E;           /* Electric Coral */
+      --accent-hover: #FF927A;     /* Coral hover */
+      --accent-active: #E06349;    /* Coral pressed */
+      --accent-muted: rgba(255, 121, 94, 0.12); /* Subtle coral background tint */
+      --accent-text: #FF795E;
+
+      /* Semantics */
+      --success: #55D6A0;          /* Success green */
+      --success-bg: rgba(85, 214, 160, 0.12);
+      --success-border: rgba(85, 214, 160, 0.28);
+
+      --error: #FF646E;            /* Error red */
+      --error-bg: rgba(255, 100, 110, 0.12);
+      --error-border: rgba(255, 100, 110, 0.28);
+
+      --info: #76A9FF;             /* Informational blue */
+      --info-bg: rgba(118, 169, 255, 0.12);
+      --info-border: rgba(118, 169, 255, 0.28);
+
+      --warning: #E5A93C;          /* Warning amber */
+      --warning-bg: rgba(229, 169, 60, 0.12);
+      --warning-border: rgba(229, 169, 60, 0.28);
+
+      /* Legacy compatibility mappings */
+      --easy: var(--success);
+      --medium: var(--warning);
+      --hard: var(--error);
+      --verdict-accepted: var(--success);
+      --verdict-accepted-bg: var(--success-bg);
+      --verdict-warning: var(--warning);
+      --verdict-warning-bg: var(--warning-bg);
+      --verdict-error: var(--error);
+      --verdict-error-bg: var(--error-bg);
+
+      /* Shape & Radii */
+      --radius: 12px;              /* Dashboard cards (10-14px) */
+      --radius-sm: 8px;            /* Buttons, inputs, banners */
+      --radius-xs: 4px;            /* Badges, micro tags */
+
+      /* Typography */
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: "IBM Plex Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+      /* Button Tokens: Dark */
+      --btn-primary-bg: var(--accent);
+      --btn-primary-bg-hover: var(--accent-hover);
+      --btn-primary-text: #111210;
+      --btn-primary-shadow: 0 4px 14px rgba(255, 121, 94, 0.28);
+      --btn-secondary-bg: var(--surface-2);
+      --btn-secondary-bg-hover: var(--surface-hover);
+      --btn-secondary-border: var(--border);
+      --btn-secondary-border-hover: var(--border-hover);
+      --btn-secondary-text: var(--text);
+      --btn-ghost-bg: transparent;
+      --btn-ghost-bg-hover: var(--accent-muted);
+      --btn-ghost-text: var(--accent);
+      --btn-focus-ring: var(--accent);
+    }
+
+    [data-theme="light"] {
+      --bg: #F5F3EF;
+      --surface: #FFFFFF;
+      --surface-2: #EBE7DF;
+      --surface-hover: #E2DDD3;
+      --border: #D8D2C5;
+      --border-hover: #BDB5A4;
+      --border-subtle: rgba(0, 0, 0, 0.05);
+
+      --text: #111210;
+      --muted: #66635D;
+      --subtle: #8A857D;
+
+      --accent: #E85D40;
+      --accent-hover: #D04F34;
+      --accent-active: #B53F26;
+      --accent-muted: rgba(232, 93, 64, 0.12);
+      --accent-text: #D04F34;
+
+      --success: #1E8E5A;
+      --success-bg: rgba(30, 142, 90, 0.12);
+      --success-border: rgba(30, 142, 90, 0.28);
+
+      --error: #D63843;
+      --error-bg: rgba(214, 56, 67, 0.12);
+      --error-border: rgba(214, 56, 67, 0.28);
+
+      --info: #2B6CB0;
+      --info-bg: rgba(43, 108, 176, 0.12);
+      --info-border: rgba(43, 108, 176, 0.28);
+
+      --warning: #A86D12;
+      --warning-bg: rgba(168, 109, 18, 0.12);
+      --warning-border: rgba(168, 109, 18, 0.28);
+
+      --btn-primary-bg: var(--accent);
+      --btn-primary-bg-hover: var(--accent-hover);
+      --btn-primary-text: #FFFFFF;
+      --btn-primary-shadow: 0 4px 14px rgba(232, 93, 64, 0.25);
+      --btn-secondary-bg: var(--surface-2);
+      --btn-secondary-bg-hover: var(--surface-hover);
+      --btn-secondary-border: var(--border);
+      --btn-secondary-border-hover: var(--border-hover);
+      --btn-secondary-text: var(--text);
+      --btn-ghost-bg: transparent;
+      --btn-ghost-bg-hover: var(--accent-muted);
+      --btn-ghost-text: var(--accent-text);
+      --btn-focus-ring: var(--accent);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .mono, code, kbd, .badge {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .dashboard-layout {
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ==========================================================================
+       Sidebar Rail (64px collapsed, 200px on hover)
+       ========================================================================== */
+    .dashboard-rail {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 64px;
+      background-color: var(--surface);
+      border-right: 1px solid var(--border);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      overflow-y: auto;
+      transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease;
+      box-shadow: none;
+    }
+
+    .dashboard-rail:hover {
+      width: 200px;
+    }
+
+    .rail-header {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 14px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .rail-brand-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .rail-brand-text {
+      font-size: 14.5px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      color: var(--text);
+    }
+
+    .dashboard-rail:hover .rail-brand-text {
+      opacity: 1;
+    }
+
+    .rail-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 16px 8px;
+      flex: 1;
+    }
+
+    .rail-item-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .rail-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 40px;
+      padding: 0 14px;
+      border-radius: var(--radius-sm);
+      color: var(--muted);
+      text-decoration: none;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      font-size: 13.5px;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: color 0.15s ease, background-color 0.15s ease;
+      width: 100%;
+      text-align: left;
+    }
+
+    .rail-item:hover {
+      color: var(--text);
+      background-color: var(--surface-2);
+    }
+
+    .rail-item:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
+
+    .rail-item-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+    }
+
+    .rail-item-label {
+      margin-left: 14px;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      pointer-events: none;
+    }
+
+    .dashboard-rail:hover .rail-item-label {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .rail-item.active {
+      color: var(--accent);
+      background-color: var(--accent-muted);
+      font-weight: 600;
+    }
+
+    .rail-item.active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 6px;
+      bottom: 6px;
+      width: 3px;
+      background-color: var(--accent);
+      border-radius: 0 2px 2px 0;
+    }
+
+    .rail-tooltip {
+      position: absolute;
+      left: calc(100% + 12px);
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      z-index: 60;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    .rail-item-wrapper:hover .rail-tooltip {
+      opacity: 1;
+    }
+
+    .dashboard-rail:hover .rail-tooltip {
+      display: none;
+    }
+
+    /* ==========================================================================
+       Main Wrapper & Topbar
+       ========================================================================== */
+    .dashboard-wrapper {
+      margin-left: 64px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 100vh;
+    }
+
+    .dashboard-topbar {
+      height: 56px;
+      background-color: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13.5px;
+      color: var(--muted);
+    }
+
+    .topbar-breadcrumb-link {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .topbar-breadcrumb-link:hover {
+      color: var(--text);
+    }
+
+    .topbar-breadcrumb-current {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .topbar-center {
+      flex: 1;
+      max-width: 440px;
+      margin: 0 24px;
+    }
+
+    .topbar-search {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0 12px;
+      height: 36px;
+      color: var(--muted);
+      cursor: text;
+      width: 100%;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .topbar-search:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+
+    .topbar-search-input {
+      background: transparent;
+      border: 0;
+      outline: 0;
+      color: var(--text);
+      font-size: 13px;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    .topbar-search-input::placeholder {
+      color: var(--subtle);
+    }
+
+    .topbar-search-kbd {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 2px 6px;
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+      line-height: 1.2;
+      flex-shrink: 0;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Refined Theme Toggle Button */
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      background-color: var(--surface-2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
+    }
+
+    .theme-toggle-btn:hover {
+      color: var(--accent);
+      background-color: var(--surface-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+    }
+
+    .theme-toggle-btn:active {
+      transform: translateY(0);
+    }
+
+    .theme-toggle-btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .topbar-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background-color: var(--surface-2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: border-color 150ms ease, color 150ms ease, transform 150ms ease;
+    }
+
+    .topbar-avatar:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    /* ==========================================================================
+       Dashboard Main Grid & Cards
+       ========================================================================== */
+    .dashboard-main {
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      box-sizing: border-box;
+      flex: 1;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .col-streak { grid-column: span 7; }
+    .col-performance { grid-column: span 5; }
+    .col-mastery { grid-column: span 4; }
+    .col-submissions { grid-column: span 8; }
+    .col-recommended { grid-column: span 12; }
+
+    /* Dashboard Card (10-14px corner radius, clean padding) */
+    .dashboard-card {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+      min-width: 0;
+      height: 100%;
+    }
+
+    .dashboard-card:hover {
+      border-color: var(--border-hover);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      gap: 12px;
+    }
+
+    .card-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-title-icon {
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: var(--accent-muted);
+      flex-shrink: 0;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+
+    .card-subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+      line-height: 1.4;
+    }
+
+    /* ==========================================================================
+       Reusable Button System
+       ========================================================================== */
+    .ck-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      line-height: 1;
+      text-decoration: none;
+      text-transform: none;
+      letter-spacing: -0.01em;
+      border-style: solid;
+      border-width: 1px;
+      box-sizing: border-box;
+      user-select: none;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      outline: none;
+      background-image: none;
+      box-shadow: none;
+      transition:
+        color 150ms ease,
+        background-color 150ms ease,
+        border-color 150ms ease,
+        box-shadow 150ms ease,
+        transform 150ms ease;
+    }
+
+    .ck-button:focus-visible {
+      outline: 2px solid var(--btn-focus-ring);
+      outline-offset: 2px;
+    }
+
+    /* Button Sizes */
+    .ck-button--size-md {
+      height: 40px;
+      min-height: 40px;
+      padding: 0 18px;
+      font-size: 14px;
+      border-radius: var(--radius-sm);
+    }
+
+    .ck-button--size-sm {
+      height: 32px;
+      min-height: 32px;
+      padding: 0 12px;
+      font-size: 13px;
+      border-radius: var(--radius-sm);
+      gap: 6px;
+    }
+
+    .ck-button--size-xs {
+      height: 26px;
+      min-height: 26px;
+      padding: 0 8px;
+      font-size: 11px;
+      border-radius: var(--radius-xs);
+      gap: 4px;
+    }
+
+    .ck-button--icon-only.ck-button--size-md {
+      width: 40px;
+      min-width: 40px;
+      padding: 0;
+    }
+
+    .ck-button--icon-only.ck-button--size-sm {
+      width: 32px;
+      min-width: 32px;
+      padding: 0;
+    }
+
+    /* Primary Variant */
+    .ck-button--primary {
+      background-color: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      border-color: transparent;
+      font-weight: 600;
+    }
+
+    .ck-button--primary:hover:not(:disabled):not([aria-disabled="true"]):not([data-loading="true"]) {
+      background-color: var(--btn-primary-bg-hover);
+      border-color: transparent;
+      box-shadow: var(--btn-primary-shadow);
+      transform: translateY(-1px);
+    }
+
+    .ck-button--primary:active:not(:disabled):not([aria-disabled="true"]):not([data-loading="true"]) {
+      transform: translateY(0);
+    }
+
+    /* Secondary Variant */
+    .ck-button--secondary {
+      background-color: var(--btn-secondary-bg);
+      color: var(--btn-secondary-text);
+      border-color: var(--btn-secondary-border);
+      font-weight: 500;
+    }
+
+    .ck-button--secondary:hover:not(:disabled):not([aria-disabled="true"]):not([data-loading="true"]) {
+      background-color: var(--btn-secondary-bg-hover);
+      border-color: var(--btn-secondary-border-hover);
+      transform: translateY(-1px);
+    }
+
+    .ck-button--secondary:active:not(:disabled):not([aria-disabled="true"]):not([data-loading="true"]) {
+      transform: translateY(0);
+    }
+
+    /* Ghost Variant */
+    .ck-button--ghost {
+      background-color: var(--btn-ghost-bg);
+      color: var(--btn-ghost-text);
+      border-color: transparent;
+      font-weight: 500;
+    }
+
+    .ck-button--ghost:hover:not(:disabled):not([aria-disabled="true"]):not([data-loading="true"]) {
+      background-color: var(--btn-ghost-bg-hover);
+      color: var(--accent-hover);
+    }
+
+    .ck-button:disabled,
+    .ck-button[aria-disabled="true"] {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .ck-button[data-loading="true"] {
+      cursor: wait;
+    }
+
+    .ck-button__content {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: inherit;
+    }
+
+    .ck-button[data-loading="true"] .ck-button__content {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .ck-button__spinner-wrapper {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .ck-button__spinner {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border-width: 2px;
+      border-style: solid;
+      border-color: currentColor;
+      border-right-color: transparent;
+      animation: ck-spin 700ms linear infinite;
+    }
+
+    @keyframes ck-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Table View Action Button */
+    .action-view-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--accent);
+      font-size: 12.5px;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: background-color 150ms ease, color 150ms ease, transform 150ms ease;
+    }
+
+    .action-view-btn:hover {
+      background-color: var(--accent-muted);
+      color: var(--accent-hover);
+    }
+
+    .action-view-btn svg {
+      transition: transform 150ms ease;
+    }
+
+    .action-view-btn:hover svg {
+      transform: translateX(2px);
+    }
+
+    /* Status Badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: var(--radius-xs);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1.2;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .status-badge--dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: currentColor;
+    }
+
+    .status-badge--accepted {
+      color: var(--success);
+      background-color: var(--success-bg);
+      border-color: var(--success-border);
+    }
+
+    .status-badge--error {
+      color: var(--error);
+      background-color: var(--error-bg);
+      border-color: var(--error-border);
+    }
+
+    .status-badge--warning {
+      color: var(--warning);
+      background-color: var(--warning-bg);
+      border-color: var(--warning-border);
+    }
+
+    .status-badge--info {
+      color: var(--info);
+      background-color: var(--info-bg);
+      border-color: var(--info-border);
+    }
+
+    /* Table Styles */
+    .submission-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    .submission-table th {
+      padding: 10px 12px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .submission-table td {
+      padding: 12px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .submission-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .submission-row {
+      transition: background-color 120ms ease;
+    }
+
+    .submission-row:hover {
+      background-color: rgba(255, 255, 255, 0.025);
+    }
+
+    .problem-link {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 150ms ease;
+    }
+
+    .problem-link:hover {
+      color: var(--accent);
+    }
+
+    /* Recommended Challenge Cards */
+    .recommended-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      transition: border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+    }
+
+    .recommended-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+    }
+
+    /* Heatmap SVG Cells */
+    .heatmap-cell {
+      transition: opacity 150ms ease, transform 150ms ease;
+    }
+
+    .heatmap-cell:hover {
+      opacity: 0.85;
+      stroke: var(--accent);
+      stroke-width: 1px;
+    }
+
+    /* Animations */
+    @keyframes cardEntrance {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-entrance {
+      animation: cardEntrance 0.28s ease-out forwards;
+    }
+
+    .stagger-1 { animation-delay: 0.04s; }
+    .stagger-2 { animation-delay: 0.09s; }
+    .stagger-3 { animation-delay: 0.14s; }
+    .stagger-4 { animation-delay: 0.19s; }
+    .stagger-5 { animation-delay: 0.24s; }
+
+    /* Skeleton Loading State */
+    @keyframes skeletonPulse {
+      0%, 100% { opacity: 0.55; }
+      50% { opacity: 0.85; }
+    }
+
+    .skeleton-pulse {
+      animation: skeletonPulse 1.6s ease-in-out infinite;
+    }
+
+    /* Dev state switcher pill at bottom right */
+    .dev-state-switcher {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      z-index: 90;
+      font-size: 11.5px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .dev-state-btn {
+      background: transparent;
+      border: 0;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      padding: 3px 8px;
+      border-radius: var(--radius-xs);
+      cursor: pointer;
+      transition: color 120ms ease, background-color 120ms ease;
+    }
+
+    .dev-state-btn:hover {
+      color: var(--text);
+      background-color: var(--surface-2);
+    }
+
+    .dev-state-btn.active {
+      color: #111210;
+      background-color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       Responsive Rules
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .col-streak,
+      .col-performance,
+      .col-mastery,
+      .col-submissions,
+      .col-recommended {
+        grid-column: span 12;
+      }
+      .dashboard-grid { gap: 16px; }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-rail {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100% !important;
+        height: 56px;
+        border-right: none;
+        border-top: 1px solid var(--border);
+        flex-direction: row;
+        overflow: visible;
+      }
+      .dashboard-rail:hover { width: 100% !important; }
+      .rail-header { display: none; }
+      .rail-nav {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        padding: 0 4px;
+      }
+      .rail-item-wrapper { width: auto; flex: 1; display: flex; justify-content: center; }
+      .rail-item { flex-direction: column; justify-content: center; align-items: center; height: 100%; padding: 0; }
+      .rail-item-label, .rail-tooltip { display: none !important; }
+      .rail-item.active::before {
+        top: 0;
+        bottom: auto;
+        left: 12px;
+        right: 12px;
+        height: 2px;
+        width: auto;
+        border-radius: 0 0 2px 2px;
+      }
+      .dashboard-wrapper { margin-left: 0; padding-bottom: 72px; }
+      .dashboard-topbar { padding: 0 16px; }
+      .topbar-center { display: none; }
+      .dashboard-main { padding: 16px; gap: 16px; }
+      .dev-state-switcher { bottom: 64px; right: 12px; }
+    }
+
+    @media (max-width: 390px) {
+      .dashboard-main { padding: 12px; gap: 12px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ck-button,
+      .dashboard-card,
+      .recommended-card,
+      .action-view-btn,
+      .animate-entrance,
+      .skeleton-pulse {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-layout">
+    <!-- Left Navigation Rail (64px -> 200px on hover, bottom tab bar on mobile) -->
+    <aside class="dashboard-rail" aria-label="Primary Navigation">
+      <div class="rail-header">
+        <div class="rail-brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+        </div>
+        <span class="rail-brand-text">Code Karo</span>
+      </div>
+
+      <nav class="rail-nav">
+        <div class="rail-item-wrapper">
+          <a href="/dashboard" class="rail-item active" aria-label="Dashboard" aria-current="page">
+            <span class="rail-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="9"></rect>
+                <rect x="14" y="3" width="7" height="5"></rect>
+                <rect x="14" y="12" width="7" height="9"></rect>
+                <rect x="3" y="16" width="7" height="5"></rect>
+              </svg>
+            </span>
+            <span class="rail-item-label">Dashboard</span>
+          </a>
+          <span class="rail-tooltip" aria-hidden="true">Dashboard</span>
+        </div>
+
+        <div class="rail-item-wrapper">
+          <a href="/practice" class="rail-item" aria-label="Practice">
+            <span class="rail-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4 17 10 11 4 5"></polyline>
+                <line x1="12" y1="19" x2="20" y2="19"></line>
+              </svg>
+            </span>
+            <span class="rail-item-label">Practice</span>
+          </a>
+          <span class="rail-tooltip" aria-hidden="true">Practice</span>
+        </div>
+
+        <div class="rail-item-wrapper">
+          <a href="/practice" class="rail-item" aria-label="Submissions">
+            <span class="rail-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 11 12 14 22 4"></polyline>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+              </svg>
+            </span>
+            <span class="rail-item-label">Submissions</span>
+          </a>
+          <span class="rail-tooltip" aria-hidden="true">Submissions</span>
+        </div>
+
+        <div class="rail-item-wrapper">
+          <a href="/profile" class="rail-item" aria-label="Profile">
+            <span class="rail-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </span>
+            <span class="rail-item-label">Profile</span>
+          </a>
+          <span class="rail-tooltip" aria-hidden="true">Profile</span>
+        </div>
+
+        <div class="rail-item-wrapper">
+          <a href="/profile" class="rail-item" aria-label="Settings">
+            <span class="rail-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </span>
+            <span class="rail-item-label">Settings</span>
+          </a>
+          <span class="rail-tooltip" aria-hidden="true">Settings</span>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="dashboard-wrapper">
+      <!-- Slim Top Bar -->
+      <header class="dashboard-topbar">
+        <!-- Breadcrumb on Left -->
+        <nav class="topbar-left" aria-label="Breadcrumb">
+          <a href="/" class="topbar-breadcrumb-link">Code Karo</a>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+          <span class="topbar-breadcrumb-current">Dashboard</span>
+        </nav>
+
+        <!-- Search (Ctrl+K) in Middle -->
+        <div class="topbar-center">
+          <div class="topbar-search">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" class="topbar-search-input" placeholder="Search topics, solutions, challenges..." aria-label="Search topics, solutions, challenges" id="search-box">
+            <kbd class="topbar-search-kbd">Ctrl+K</kbd>
+          </div>
+        </div>
+
+        <!-- Theme Toggle and Avatar on Right -->
+        <div class="topbar-right">
+          <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle color theme" title="Toggle color theme">
+            <svg id="theme-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <span class="sr-only" id="theme-label">Light mode</span>
+          </button>
+          <div class="topbar-avatar" title="Student Profile: CK" aria-label="Student Profile: CK">
+            CK
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Area: 12-Column Grid -->
+      <main class="dashboard-main" id="dashboard-container">
+        <h1 style="display: none;">Dashboard</h1>
+
+        <div class="dashboard-grid" id="dashboard-content-grid">
+          <!-- Row 1: Daily Practice Streak (7 cols) -->
+          <div class="col-streak animate-entrance stagger-1" id="widget-streak-container">
+            <section class="dashboard-card" aria-labelledby="streak-title">
+              <header class="card-header">
+                <div>
+                  <div class="card-title-group">
+                    <span class="card-title-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+                      </svg>
+                    </span>
+                    <h2 class="card-title" id="streak-title">Daily Practice Streak</h2>
+                  </div>
+                  <p class="card-subtitle">Consistent submission rhythm across recent study cycles</p>
+                </div>
+              </header>
+
+              <div style="display: flex; flex-direction: column; gap: 18px; flex: 1;">
+                <!-- 3 Metrics Columns -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 14px 18px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+                  <div>
+                    <span style="font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); display: block;">Current Streak</span>
+                    <div style="display: flex; align-items: baseline; gap: 4px; margin-top: 4px;">
+                      <span class="mono" style="font-size: 24px; font-weight: 700; color: var(--accent);">12</span>
+                      <span style="font-size: 11px; color: var(--muted);">days</span>
+                    </div>
+                  </div>
+                  <div>
+                    <span style="font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); display: block;">Longest Streak</span>
+                    <div style="display: flex; align-items: baseline; gap: 4px; margin-top: 4px;">
+                      <span class="mono" style="font-size: 24px; font-weight: 700; color: var(--text);">28</span>
+                      <span style="font-size: 11px; color: var(--muted);">days</span>
+                    </div>
+                  </div>
+                  <div>
+                    <span style="font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); display: block;">Active Days</span>
+                    <div style="display: flex; align-items: baseline; gap: 4px; margin-top: 4px;">
+                      <span class="mono" style="font-size: 24px; font-weight: 700; color: var(--text);">74</span>
+                      <span style="font-size: 11px; color: var(--muted);">total</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Custom SVG Heatmap -->
+                <div style="overflow-x: auto; padding-bottom: 4px;">
+                  <svg id="heatmap-svg" width="100%" height="98" viewBox="0 0 262 98" style="display: block; min-width: 262px;" aria-label="Practice activity heatmap for past 18 weeks" role="img"></svg>
+                </div>
+
+                <!-- Heatmap Legend -->
+                <div style="display: flex; align-items: center; justify-content: flex-end; gap: 6px; font-size: 11px; color: var(--muted);">
+                  <span>Less</span>
+                  <span style="width: 10px; height: 10px; border-radius: 2px; background: var(--surface-2); border: 0.5px solid var(--border);" title="No submissions"></span>
+                  <span style="width: 10px; height: 10px; border-radius: 2px; background: rgba(255, 121, 94, 0.28); border: 0.5px solid var(--border);" title="1-2 submissions"></span>
+                  <span style="width: 10px; height: 10px; border-radius: 2px; background: rgba(255, 121, 94, 0.52); border: 0.5px solid var(--border);" title="3-4 submissions"></span>
+                  <span style="width: 10px; height: 10px; border-radius: 2px; background: rgba(255, 121, 94, 0.78); border: 0.5px solid var(--border);" title="5-6 submissions"></span>
+                  <span style="width: 10px; height: 10px; border-radius: 2px; background: var(--accent); border: 0.5px solid var(--border);" title="7+ submissions"></span>
+                  <span>More</span>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- Row 1: Performance Metrics (5 cols) -->
+          <div class="col-performance animate-entrance stagger-2" id="widget-perf-container">
+            <section class="dashboard-card" aria-labelledby="perf-title">
+              <header class="card-header">
+                <div>
+                  <div class="card-title-group">
+                    <span class="card-title-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                      </svg>
+                    </span>
+                    <h2 class="card-title" id="perf-title">Performance Metrics</h2>
+                  </div>
+                  <p class="card-subtitle">Evaluation accuracy and execution speed</p>
+                </div>
+              </header>
+
+              <div style="display: flex; flex-direction: column; gap: 18px; flex: 1; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 24px;">
+                  <!-- Circular Progress Indicator -->
+                  <div style="position: relative; width: 96px; height: 96px; flex-shrink: 0;">
+                    <svg height="96" width="96" viewBox="0 0 96 96" style="transform: rotate(-90deg); display: block;" aria-label="Acceptance rate ring chart: 61%" role="img">
+                      <circle stroke="var(--surface-2)" fill="transparent" stroke-width="7" r="38" cx="48" cy="48"></circle>
+                      <circle stroke="var(--accent)" fill="transparent" stroke-width="7" stroke-dasharray="238.7 238.7" stroke-dashoffset="93.1" stroke-linecap="round" r="38" cx="48" cy="48" style="transition: stroke-dashoffset 0.6s ease;"></circle>
+                    </svg>
+                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                      <span class="mono" style="font-size: 16px; font-weight: 700; color: var(--text);">61.0%</span>
+                      <span style="font-size: 9.5px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 1px;">Pass</span>
+                    </div>
+                  </div>
+
+                  <!-- Metrics List -->
+                  <div style="display: flex; flex-direction: column; gap: 10px; flex: 1;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; font-size: 12.5px;">
+                      <span style="color: var(--muted);">Accepted Solves</span>
+                      <span class="mono" style="font-weight: 500;"><span style="color: var(--success); font-weight: 600;">47</span> <span style="color: var(--muted);">/ 77</span></span>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; font-size: 12.5px;">
+                      <span style="color: var(--muted);">Median Runtime</span>
+                      <span class="mono" style="font-weight: 600; color: var(--text);">84 ms</span>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; font-size: 12.5px;">
+                      <span style="color: var(--muted);">Tests Executed</span>
+                      <span class="mono" style="font-weight: 600; color: var(--text);">412</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Judge Efficiency Banner -->
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 12px;">
+                  <span style="color: var(--muted); display: inline-flex; align-items: center; gap: 6px;">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    Judge Efficiency
+                  </span>
+                  <span class="mono" style="color: var(--success); font-weight: 600;">Optimal (99.2%)</span>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- Row 2: OOP Mastery (4 cols) -->
+          <div class="col-mastery animate-entrance stagger-3" id="widget-oop-container">
+            <section class="dashboard-card" aria-labelledby="oop-title">
+              <header class="card-header">
+                <div>
+                  <div class="card-title-group">
+                    <span class="card-title-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                      </svg>
+                    </span>
+                    <h2 class="card-title" id="oop-title">OOP Mastery</h2>
+                  </div>
+                  <p class="card-subtitle">Progress across core Java concepts</p>
+                </div>
+              </header>
+
+              <div style="display: flex; flex-direction: column; gap: 16px; flex: 1; justify-content: space-between;">
+                <div>
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
+                    <span style="font-weight: 500; color: var(--text);">Inheritance</span>
+                    <span class="mono" style="font-size: 12px; color: var(--muted);"><span style="color: var(--text); font-weight: 600;">14</span>/18 (78%)</span>
+                  </div>
+                  <div style="height: 7px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; overflow: hidden;">
+                    <div style="width: 78%; height: 100%; background: var(--accent); border-radius: 3px;"></div>
+                  </div>
+                  <span style="font-size: 11.5px; color: var(--muted); display: block; margin-top: 4px;">Extends, super, method overriding</span>
+                </div>
+
+                <div>
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
+                    <span style="font-weight: 500; color: var(--text);">Polymorphism</span>
+                    <span class="mono" style="font-size: 12px; color: var(--muted);"><span style="color: var(--text); font-weight: 600;">11</span>/15 (73%)</span>
+                  </div>
+                  <div style="height: 7px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; overflow: hidden;">
+                    <div style="width: 73%; height: 100%; background: var(--accent); border-radius: 3px;"></div>
+                  </div>
+                  <span style="font-size: 11.5px; color: var(--muted); display: block; margin-top: 4px;">Dynamic dispatch, overloading, interfaces</span>
+                </div>
+
+                <div>
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
+                    <span style="font-weight: 500; color: var(--text);">Abstraction</span>
+                    <span class="mono" style="font-size: 12px; color: var(--muted);"><span style="color: var(--text); font-weight: 600;">9</span>/12 (75%)</span>
+                  </div>
+                  <div style="height: 7px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; overflow: hidden;">
+                    <div style="width: 75%; height: 100%; background: var(--accent); border-radius: 3px;"></div>
+                  </div>
+                  <span style="font-size: 11.5px; color: var(--muted); display: block; margin-top: 4px;">Abstract classes, contract boundaries</span>
+                </div>
+
+                <div>
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
+                    <span style="font-weight: 500; color: var(--text);">Encapsulation</span>
+                    <span class="mono" style="font-size: 12px; color: var(--muted);"><span style="color: var(--text); font-weight: 600;">13</span>/14 (93%)</span>
+                  </div>
+                  <div style="height: 7px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; overflow: hidden;">
+                    <div style="width: 93%; height: 100%; background: var(--accent); border-radius: 3px;"></div>
+                  </div>
+                  <span style="font-size: 11.5px; color: var(--muted); display: block; margin-top: 4px;">Access mutators, immutable objects</span>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- Row 2: Recent Submissions (8 cols) -->
+          <div class="col-submissions animate-entrance stagger-4" id="widget-sub-container">
+            <section class="dashboard-card" aria-labelledby="sub-title">
+              <header class="card-header">
+                <div>
+                  <div class="card-title-group">
+                    <span class="card-title-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 11 12 14 22 4"></polyline>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                      </svg>
+                    </span>
+                    <h2 class="card-title" id="sub-title">Recent Submissions</h2>
+                  </div>
+                  <p class="card-subtitle">Evaluated solutions across recent judge runs</p>
+                </div>
+              </header>
+
+              <div style="overflow-x: auto; flex: 1;">
+                <table class="submission-table">
+                  <thead>
+                    <tr>
+                      <th style="padding-left: 0;">Problem</th>
+                      <th>Language</th>
+                      <th>Verdict</th>
+                      <th style="text-align: right;">Runtime</th>
+                      <th style="text-align: right;">Submitted</th>
+                      <th style="text-align: right; padding-right: 0;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="submission-row">
+                      <td style="padding-left: 0;"><a href="/practice?id=class-student" class="problem-link">Bank Account with Inheritance</a></td>
+                      <td class="mono" style="color: var(--muted);">Java 17</td>
+                      <td>
+                        <span class="status-badge status-badge--accepted">
+                          <span class="status-badge--dot"></span>Accepted
+                        </span>
+                      </td>
+                      <td class="mono" style="text-align: right;"><span style="color: var(--text); font-weight: 500;">72</span> <span style="color: var(--muted); font-size: 11px;">ms</span></td>
+                      <td class="mono" style="text-align: right; color: var(--muted);">14m ago</td>
+                      <td style="text-align: right; padding-right: 0;">
+                        <a href="/practice?id=class-student" class="action-view-btn">
+                          <span>View</span>
+                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr class="submission-row">
+                      <td style="padding-left: 0;"><a href="/practice?id=employee" class="problem-link">Shape Hierarchy with Abstract Classes</a></td>
+                      <td class="mono" style="color: var(--muted);">Java 17</td>
+                      <td>
+                        <span class="status-badge status-badge--error">
+                          <span class="status-badge--dot"></span>Wrong Answer
+                        </span>
+                      </td>
+                      <td class="mono" style="text-align: right;"><span style="color: var(--text); font-weight: 500;">96</span> <span style="color: var(--muted); font-size: 11px;">ms</span></td>
+                      <td class="mono" style="text-align: right; color: var(--muted);">2h ago</td>
+                      <td style="text-align: right; padding-right: 0;">
+                        <a href="/practice?id=employee" class="action-view-btn">
+                          <span>View</span>
+                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr class="submission-row">
+                      <td style="padding-left: 0;"><a href="/practice?id=daily-loss-counter" class="problem-link">Thread Safe Counter Lock</a></td>
+                      <td class="mono" style="color: var(--muted);">Java 17</td>
+                      <td>
+                        <span class="status-badge status-badge--accepted">
+                          <span class="status-badge--dot"></span>Accepted
+                        </span>
+                      </td>
+                      <td class="mono" style="text-align: right;"><span style="color: var(--text); font-weight: 500;">64</span> <span style="color: var(--muted); font-size: 11px;">ms</span></td>
+                      <td class="mono" style="text-align: right; color: var(--muted);">5h ago</td>
+                      <td style="text-align: right; padding-right: 0;">
+                        <a href="/practice?id=daily-loss-counter" class="action-view-btn">
+                          <span>View</span>
+                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr class="submission-row">
+                      <td style="padding-left: 0;"><a href="/practice" class="problem-link">Matrix Transpose Parallel</a></td>
+                      <td class="mono" style="color: var(--muted);">Java 17</td>
+                      <td>
+                        <span class="status-badge status-badge--warning">
+                          <span class="status-badge--dot"></span>Time Limit Exceeded
+                        </span>
+                      </td>
+                      <td class="mono" style="text-align: right;"><span style="color: var(--text); font-weight: 500;">2010</span> <span style="color: var(--muted); font-size: 11px;">ms</span></td>
+                      <td class="mono" style="text-align: right; color: var(--muted);">1d ago</td>
+                      <td style="text-align: right; padding-right: 0;">
+                        <a href="/practice" class="action-view-btn">
+                          <span>View</span>
+                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr class="submission-row">
+                      <td style="padding-left: 0;"><a href="/practice?id=custom-exception-power" class="problem-link">Custom Stack with Exception Handling</a></td>
+                      <td class="mono" style="color: var(--muted);">Java 17</td>
+                      <td>
+                        <span class="status-badge status-badge--error">
+                          <span class="status-badge--dot"></span>Runtime Error
+                        </span>
+                      </td>
+                      <td class="mono" style="text-align: right;"><span style="color: var(--text); font-weight: 500;">88</span> <span style="color: var(--muted); font-size: 11px;">ms</span></td>
+                      <td class="mono" style="text-align: right; color: var(--muted);">2d ago</td>
+                      <td style="text-align: right; padding-right: 0;">
+                        <a href="/practice?id=custom-exception-power" class="action-view-btn">
+                          <span>View</span>
+                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+
+          <!-- Row 3: Recommended Challenges (12 cols) -->
+          <div class="col-recommended animate-entrance stagger-5" id="widget-rec-container">
+            <section class="dashboard-card" aria-labelledby="rec-title">
+              <header class="card-header">
+                <div>
+                  <div class="card-title-group">
+                    <span class="card-title-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="8" r="7"></circle>
+                        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                      </svg>
+                    </span>
+                    <h2 class="card-title" id="rec-title">Recommended Challenges</h2>
+                  </div>
+                  <p class="card-subtitle">Selected exercises to strengthen current OOP concept mastery</p>
+                </div>
+                <a href="/practice" class="action-view-btn" style="font-size: 12px; color: var(--muted);">
+                  <span>All Challenges</span>
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+              </header>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+                <div class="recommended-card">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                      <span style="font-size: 11px; font-weight: 600; color: var(--warning); text-transform: uppercase;">MEDIUM</span>
+                      <span style="font-size: 10.5px; color: var(--border);">•</span>
+                      <span style="font-size: 11.5px; color: var(--muted);">Inheritance</span>
+                    </div>
+                    <h3 style="font-size: 14px; font-weight: 600; color: var(--text);">Employee Salary Hierarchy</h3>
+                  </div>
+                  <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--border);">
+                    <span class="mono" style="font-size: 11.5px; color: var(--muted);">~25 min</span>
+                    <a href="/practice?id=employee" class="ck-button ck-button--secondary ck-button--size-sm">
+                      <span>Start</span>
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="recommended-card">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                      <span style="font-size: 11px; font-weight: 600; color: var(--success); text-transform: uppercase;">EASY</span>
+                      <span style="font-size: 10.5px; color: var(--border);">•</span>
+                      <span style="font-size: 11.5px; color: var(--muted);">Polymorphism</span>
+                    </div>
+                    <h3 style="font-size: 14px; font-weight: 600; color: var(--text);">Dynamic Dispatch Shape Area</h3>
+                  </div>
+                  <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--border);">
+                    <span class="mono" style="font-size: 11.5px; color: var(--muted);">~15 min</span>
+                    <a href="/practice?id=class-student" class="ck-button ck-button--secondary ck-button--size-sm">
+                      <span>Start</span>
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="recommended-card">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                      <span style="font-size: 11px; font-weight: 600; color: var(--warning); text-transform: uppercase;">MEDIUM</span>
+                      <span style="font-size: 10.5px; color: var(--border);">•</span>
+                      <span style="font-size: 11.5px; color: var(--muted);">Abstraction</span>
+                    </div>
+                    <h3 style="font-size: 14px; font-weight: 600; color: var(--text);">Interface Notification Pipeline</h3>
+                  </div>
+                  <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--border);">
+                    <span class="mono" style="font-size: 11.5px; color: var(--muted);">~30 min</span>
+                    <a href="/practice?id=custom-exception-power" class="ck-button ck-button--secondary ck-button--size-sm">
+                      <span>Start</span>
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="recommended-card">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                      <span style="font-size: 11px; font-weight: 600; color: var(--error); text-transform: uppercase;">HARD</span>
+                      <span style="font-size: 10.5px; color: var(--border);">•</span>
+                      <span style="font-size: 11.5px; color: var(--muted);">Encapsulation</span>
+                    </div>
+                    <h3 style="font-size: 14px; font-weight: 600; color: var(--text);">Immutable Value Object Pattern</h3>
+                  </div>
+                  <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--border);">
+                    <span class="mono" style="font-size: 11.5px; color: var(--muted);">~45 min</span>
+                    <a href="/practice?id=daily-loss-counter" class="ck-button ck-button--secondary ck-button--size-sm">
+                      <span>Start</span>
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Dev-only State Preview Switcher -->
+    <aside class="dev-state-switcher" aria-label="Dev State Switcher">
+      <span style="color: var(--muted); margin-right: 4px;">State:</span>
+      <button type="button" class="dev-state-btn active" data-state="populated" title="Preview populated state">populated</button>
+      <button type="button" class="dev-state-btn" data-state="loading" title="Preview loading skeleton state">loading</button>
+      <button type="button" class="dev-state-btn" data-state="empty" title="Preview empty state">empty</button>
+      <button type="button" class="dev-state-btn" data-state="error" title="Preview error state">error</button>
+    </aside>
+  </div>
+
+  <script>
+    (function () {
+      // Build 18-week heatmap SVG cells
+      function renderHeatmap() {
+        const svg = document.getElementById("heatmap-svg");
+        if (!svg) return;
+        svg.innerHTML = "";
+        const cell = 11, gap = 3.5;
+        const colors = [
+          "var(--surface-2)",              // Level 0: empty cell (#292824 - clearly distinct from #1B1B19 card bg)
+          "rgba(255, 121, 94, 0.28)",      // Level 1: subtle coral
+          "rgba(255, 121, 94, 0.52)",      // Level 2: medium coral
+          "rgba(255, 121, 94, 0.78)",      // Level 3: strong coral
+          "var(--accent)"                  // Level 4: full Electric Coral (#FF795E)
+        ];
+        const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        for (let w = 0; w < 18; w++) {
+          for (let d = 0; d < 7; d++) {
+            const idx = w * 7 + d;
+            let lvl = 0;
+            if (idx >= 114) { // active current streak
+              lvl = ((idx * 3 + 2) % 4) + 1;
+            } else if ((idx * 17 + 7) % 10 > 4) {
+              lvl = ((idx * 7) % 3) + 1;
+            }
+            const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            rect.setAttribute("x", w * (cell + gap));
+            rect.setAttribute("y", d * (cell + gap));
+            rect.setAttribute("width", cell);
+            rect.setAttribute("height", cell);
+            rect.setAttribute("rx", "2.5");
+            rect.setAttribute("ry", "2.5");
+            rect.setAttribute("fill", colors[lvl]);
+            rect.setAttribute("stroke", "var(--border)");
+            rect.setAttribute("stroke-width", "0.5");
+            rect.setAttribute("class", "heatmap-cell");
+            
+            const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
+            const count = lvl === 0 ? "0" : (lvl * 2 + 1);
+            title.textContent = `Week ${w + 1}, ${days[d]}: ${count} submissions`;
+            rect.appendChild(title);
+
+            svg.appendChild(rect);
+          }
+        }
+      }
+
+      renderHeatmap();
+
+      // Theme toggle persistence
+      const STORAGE_KEY = "code_karo_theme";
+      const toggleBtn = document.getElementById("theme-toggle");
+      const themeIcon = document.getElementById("theme-icon");
+      const label = document.getElementById("theme-label");
+
+      function updateThemeIcon(isLight) {
+        if (!themeIcon) return;
+        if (isLight) {
+          // Show Moon icon (switch to dark)
+          themeIcon.innerHTML = `
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          `;
+          if (toggleBtn) toggleBtn.setAttribute("title", "Switch to dark theme");
+          if (label) label.textContent = "Switch to dark theme";
+        } else {
+          // Show Sun icon (switch to light)
+          themeIcon.innerHTML = `
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          `;
+          if (toggleBtn) toggleBtn.setAttribute("title", "Switch to light theme");
+          if (label) label.textContent = "Switch to light theme";
+        }
+      }
+
+      function applyTheme(theme) {
+        const isLight = theme === "light";
+        if (isLight) {
+          document.documentElement.setAttribute("data-theme", "light");
+        } else {
+          document.documentElement.removeAttribute("data-theme");
+        }
+        updateThemeIcon(isLight);
+        try { localStorage.setItem(STORAGE_KEY, theme); } catch (e) {}
+      }
+
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved === "light" || saved === "dark") {
+          applyTheme(saved);
+        } else if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+          applyTheme("light");
+        } else {
+          updateThemeIcon(false);
+        }
+      } catch (e) {
+        updateThemeIcon(false);
+      }
+
+      if (toggleBtn) {
+        toggleBtn.addEventListener("click", function () {
+          const isLight = document.documentElement.getAttribute("data-theme") === "light";
+          applyTheme(isLight ? "dark" : "light");
+        });
+      }
+
+      // Keyboard shortcut Ctrl+K / Cmd+K
+      window.addEventListener("keydown", function (e) {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+          e.preventDefault();
+          const s = document.getElementById("search-box");
+          if (s) s.focus();
+        }
+      });
+
+      // Interactive Dev State Switcher (?state=loading|empty|error|populated)
+      const stateBtns = document.querySelectorAll(".dev-state-btn[data-state]");
+      const grid = document.getElementById("dashboard-content-grid");
+      const originalHTML = grid.innerHTML;
+
+      function renderState(state) {
+        stateBtns.forEach(b => b.classList.toggle("active", b.getAttribute("data-state") === state));
+
+        if (state === "populated") {
+          grid.innerHTML = originalHTML;
+          renderHeatmap();
+        } else if (state === "loading") {
+          grid.innerHTML = `
+            <div class="col-streak"><div class="dashboard-card skeleton-pulse" style="min-height:220px;display:flex;flex-direction:column;gap:14px;"><div style="height:20px;width:140px;background:var(--surface-2);border-radius:4px;"></div><div style="flex:1;background:var(--surface-2);border-radius:8px;"></div></div></div>
+            <div class="col-performance"><div class="dashboard-card skeleton-pulse" style="min-height:220px;display:flex;align-items:center;justify-content:center;"><div style="width:96px;height:96px;border-radius:50%;border:7px solid var(--surface-2);"></div></div></div>
+            <div class="col-mastery"><div class="dashboard-card skeleton-pulse" style="min-height:200px;display:flex;flex-direction:column;gap:16px;"><div style="height:16px;width:120px;background:var(--surface-2);border-radius:4px;"></div><div style="height:12px;background:var(--surface-2);border-radius:4px;"></div><div style="height:12px;background:var(--surface-2);border-radius:4px;"></div><div style="height:12px;background:var(--surface-2);border-radius:4px;"></div></div></div>
+            <div class="col-submissions"><div class="dashboard-card skeleton-pulse" style="min-height:200px;display:flex;flex-direction:column;gap:12px;"><div style="height:20px;width:160px;background:var(--surface-2);border-radius:4px;"></div><div style="flex:1;background:var(--surface-2);border-radius:6px;"></div></div></div>
+            <div class="col-recommended"><div class="dashboard-card skeleton-pulse" style="min-height:140px;display:flex;gap:16px;"><div style="flex:1;background:var(--surface-2);height:110px;border-radius:8px;"></div><div style="flex:1;background:var(--surface-2);height:110px;border-radius:8px;"></div><div style="flex:1;background:var(--surface-2);height:110px;border-radius:8px;"></div><div style="flex:1;background:var(--surface-2);height:110px;border-radius:8px;"></div></div></div>
+          `;
+        } else if (state === "empty") {
+          grid.innerHTML = `
+            <div class="col-streak"><div class="dashboard-card" style="min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;"><p style="font-size:13px;color:var(--muted);">No practice activity recorded yet. Solve your first problem to ignite your streak.</p><a href="/practice" class="ck-button ck-button--primary ck-button--size-sm">Start Practice</a></div></div>
+            <div class="col-performance"><div class="dashboard-card" style="min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;"><p style="font-size:13px;color:var(--muted);">No test runs recorded yet. Execute code in the judge to view telemetry.</p><a href="/practice" class="ck-button ck-button--primary ck-button--size-sm">Launch IDE</a></div></div>
+            <div class="col-mastery"><div class="dashboard-card" style="min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;"><p style="font-size:13px;color:var(--muted);">No topics attempted yet. Complete foundational OOP exercises.</p><a href="/practice" class="ck-button ck-button--primary ck-button--size-sm">Start Practice</a></div></div>
+            <div class="col-submissions"><div class="dashboard-card" style="min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;"><p style="font-size:13px;color:var(--muted);">No submissions recorded yet. Submit your first solution in the practice IDE.</p><a href="/practice" class="ck-button ck-button--primary ck-button--size-sm">Launch Judge</a></div></div>
+            <div class="col-recommended"><div class="dashboard-card" style="min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;"><p style="font-size:13px;color:var(--muted);">All current recommended tracks completed. Explore the full library.</p><a href="/practice" class="ck-button ck-button--primary ck-button--size-sm">Launch Practice IDE</a></div></div>
+          `;
+        } else if (state === "error") {
+          grid.innerHTML = `
+            <div style="grid-column: span 12;">
+              <div class="dashboard-card" style="min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;">
+                <div style="width:40px;height:40px;border-radius:50%;background:var(--error-bg);color:var(--error);display:flex;align-items:center;justify-content:center;">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                </div>
+                <p style="font-size:14px;color:var(--error);max-width:440px;">Unable to load dashboard metrics from Code Karo service. Verify network connection and retry.</p>
+                <button type="button" onclick="window.renderDashboardState('populated')" class="ck-button ck-button--secondary ck-button--size-sm">Retry Connection</button>
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      window.renderDashboardState = renderState;
+
+      stateBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const s = btn.getAttribute("data-state");
+          const url = new URL(window.location.href);
+          url.searchParams.set("state", s);
+          window.history.replaceState({}, "", url.toString());
+          renderState(s);
+        });
+      });
+
+      // Read initial state from URL (?state=...)
+      const params = new URLSearchParams(window.location.search);
+      const initialParam = params.get("state");
+      if (initialParam && ["loading", "empty", "error", "populated"].includes(initialParam)) {
+        renderState(initialParam);
+      }
+    })();
+  </script>
+</body>
+</html>

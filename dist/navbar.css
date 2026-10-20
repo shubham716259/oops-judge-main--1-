@@ -1,0 +1,122 @@
+.split-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.split-nav__links {
+  position: relative;
+  display: flex;
+  align-items: center;
+  isolation: isolate;
+}
+
+.split-nav__link {
+  position: relative;
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  border-radius: 11px;
+  color: #a7a9b2;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transform: translateX(var(--nav-offset, 0px));
+  transition:
+    transform .36s cubic-bezier(.2, .8, .2, 1),
+    color .16s ease,
+    opacity .22s ease,
+    background-color .16s ease;
+}
+
+.split-nav__link::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background: rgba(220, 229, 247, .035);
+  content: "";
+  transition: background-color .16s ease, border-color .16s ease;
+}
+
+.split-nav__link:hover,
+.split-nav__link.is-highlighted {
+  color: #15161b;
+}
+
+.split-nav__link:hover::before,
+.split-nav__link.is-highlighted::before {
+  border-color: rgba(220, 229, 247, .75);
+  background: #e5e7eb;
+}
+
+.split-nav__link:focus-visible,
+.split-nav__expand:focus-visible {
+  outline: 2px solid #aeb3bf;
+  outline-offset: 3px;
+}
+
+.split-nav__link[aria-current="page"]::after {
+  position: absolute;
+  right: 50%;
+  bottom: 5px;
+  width: 12px;
+  height: 2px;
+  border-radius: 2px;
+  background: #aeb1ba;
+  content: "";
+  transform: translateX(50%);
+}
+
+.split-nav__expand {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: none;
+  place-items: center;
+  border: 1px solid rgba(220, 229, 247, .12);
+  border-radius: 11px;
+  background: rgba(220, 229, 247, .05);
+  color: #d9dbe2;
+  font-family: inherit;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color .16s ease, opacity .2s ease, transform .2s ease;
+}
+
+.split-nav__expand:hover {
+  background: rgba(220, 229, 247, .12);
+}
+
+.split-nav__expand[hidden] {
+  display: none;
+}
+
+.split-nav.is-folded .split-nav__link:not(.is-active) {
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(0) scale(.82);
+}
+
+@media (max-width: 560px) {
+  .split-nav__link {
+    min-height: 34px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .split-nav__link,
+  .split-nav__link::before,
+  .split-nav__expand {
+    transition: none;
+  }
+}

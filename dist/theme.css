@@ -1,0 +1,270 @@
+.theme-switch {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 12px;
+  border: 1px solid rgba(190, 194, 205, .16);
+  border-radius: 8px;
+  background: rgba(190, 194, 205, .06);
+  color: #e4e4e8;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color .18s ease, background-color .18s ease, color .18s ease;
+}
+
+.theme-switch:hover {
+  border-color: rgba(190, 194, 205, .42);
+  background: rgba(190, 194, 205, .12);
+}
+
+.theme-switch:focus-visible {
+  outline: 2px solid #aeb1ba;
+  outline-offset: 3px;
+}
+
+.theme-switch__icon {
+  display: block;
+  width: 17px;
+  height: 17px;
+  flex: none;
+  overflow: visible;
+}
+
+.theme-switch__sun-rays {
+  transform-origin: 12px 12px;
+  transition: opacity .2s ease, transform .32s cubic-bezier(.23, 1, .32, 1);
+}
+
+.theme-switch__moon {
+  transform-origin: center;
+  transition: opacity .2s ease, transform .32s cubic-bezier(.23, 1, .32, 1);
+}
+
+.theme-switch__moon-cutout {
+  fill: var(--theme-button-bg, #101014);
+  transition: fill .2s ease;
+}
+
+html[data-theme="dark"] .theme-switch__sun-rays,
+html[data-theme="light"] .theme-switch__moon {
+  opacity: 0;
+  transform: scale(.55) rotate(-40deg);
+}
+
+html[data-theme="dark"] .theme-switch__moon,
+html[data-theme="light"] .theme-switch__sun-rays {
+  opacity: 1;
+  transform: scale(1) rotate(0);
+}
+
+.theme-switch--compact {
+  width: 36px;
+  min-height: 36px;
+  padding: 0;
+}
+
+.theme-switch--compact .theme-switch__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+html[data-theme="light"] .theme-switch {
+  border-color: rgba(32, 33, 38, .18);
+  background: rgba(255, 255, 255, .78);
+  color: #202126;
+  --theme-button-bg: #f0f0f2;
+}
+
+html[data-theme="light"] .theme-switch:hover {
+  border-color: rgba(32, 33, 38, .42);
+  background: #e5e5e8;
+}
+
+html[data-theme="dark"] .theme-switch {
+  --theme-button-bg: #101014;
+}
+
+html[data-theme-reveal]::view-transition-old(root),
+html[data-theme-reveal]::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+@media (max-width: 560px) {
+  .theme-switch:not(.theme-switch--compact) {
+    width: 36px;
+    min-height: 34px;
+    padding: 0;
+  }
+
+  .theme-switch:not(.theme-switch--compact) .theme-switch__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    clip-path: inset(50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-switch,
+  .theme-switch__sun-rays,
+  .theme-switch__moon {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   CodeKaro Web Editor - VS Code Theme System
+   ========================================================================== */
+
+/* Core CSS Variables Schema */
+:root {
+  /* UI Elements */
+  --editor-bg: #1e1e1e;
+  --editor-fg: #d4d4d4;
+  --editor-line-number: #858585;
+  --editor-line-highlight: #2a2d2e;
+  --editor-selection: #264f78;
+  --editor-cursor: #aeafad;
+  --editor-border: #333333;
+
+  /* Syntax Tokens */
+  --token-keyword: #569cd6;
+  --token-string: #ce9178;
+  --token-function: #dcdcaa;
+  --token-variable: #9cdcfe;
+  --token-comment: #6a9955;
+  --token-number: #b5cea8;
+  --token-operator: #d4d4d4;
+  --token-type: #4ec9b0;
+}
+
+/* 1. Night Owl (Italic) */
+[data-theme="night-owl"],
+[data-editor-theme="night-owl"] {
+  --editor-bg: #011627;
+  --editor-fg: #d6deeb;
+  --editor-line-number: #4b6479;
+  --editor-line-highlight: #082138;
+  --editor-selection: #1d3b53;
+  --editor-cursor: #7e57c2;
+  --editor-border: #0b253a;
+
+  --token-keyword: #ecc48d;
+  --token-string: #addb67;
+  --token-function: #21c7a8;
+  --token-variable: #7fdbca;
+  --token-comment: #637777;
+  --token-number: #f78c6c;
+  --token-operator: #c792ea;
+  --token-type: #ffcb8b;
+}
+
+/* 2. Material Theme Darker / High Contrast */
+[data-theme="material-darker"],
+[data-editor-theme="material-darker"] {
+  --editor-bg: #0f0f0f;
+  --editor-fg: #eeffff;
+  --editor-line-number: #424242;
+  --editor-line-highlight: #1a1a1a;
+  --editor-selection: #2b2b2b;
+  --editor-cursor: #00e5ff;
+  --editor-border: #1e1e1e;
+
+  --token-keyword: #ff5370;
+  --token-string: #c3e88d;
+  --token-function: #00e5ff;
+  --token-variable: #eeffff;
+  --token-comment: #545454;
+  --token-number: #f78c6c;
+  --token-operator: #89ddff;
+  --token-type: #ffcb6b;
+}
+
+/* 3. Aura Dark Theme */
+[data-theme="aura-dark"],
+[data-editor-theme="aura-dark"] {
+  --editor-bg: #15141b;
+  --editor-fg: #edecee;
+  --editor-line-number: #4d4669;
+  --editor-line-highlight: #201e2a;
+  --editor-selection: #37324d;
+  --editor-cursor: #a277ff;
+  --editor-border: #252233;
+
+  --token-keyword: #ff679a;
+  --token-string: #a277ff;
+  --token-function: #61ffca;
+  --token-variable: #ffca85;
+  --token-comment: #6d6d8c;
+  --token-number: #ffca85;
+  --token-operator: #edecee;
+  --token-type: #82e2ff;
+}
+
+/* 4. Andromeda */
+[data-theme="andromeda"],
+[data-editor-theme="andromeda"] {
+  --editor-bg: #1e222a;
+  --editor-fg: #d5cec8;
+  --editor-line-number: #4e5666;
+  --editor-line-highlight: #262b35;
+  --editor-selection: #363d4d;
+  --editor-cursor: #00e8c6;
+  --editor-border: #2a303c;
+
+  --token-keyword: #ff4a6e;
+  --token-string: #f39c12;
+  --token-function: #98e024;
+  --token-variable: #d5cec8;
+  --token-comment: #5c6370;
+  --token-number: #ff9e64;
+  --token-operator: #00e8c6;
+  --token-type: #ffe66d;
+}
+
+/* 5. Tokyo Night Storm */
+[data-theme="tokyo-night-storm"],
+[data-editor-theme="tokyo-night-storm"] {
+  --editor-bg: #1a1b26;
+  --editor-fg: #c0caf5;
+  --editor-line-number: #3b4261;
+  --editor-line-highlight: #24283b;
+  --editor-selection: #2e3c64;
+  --editor-cursor: #c0caf5;
+  --editor-border: #1f2335;
+
+  --token-keyword: #bb9af7;
+  --token-string: #9ece6a;
+  --token-function: #7dcfff;
+  --token-variable: #c0caf5;
+  --token-comment: #565f89;
+  --token-number: #ff9e64;
+  --token-operator: #89ddff;
+  --token-type: #e0af68;
+}
+
+/* Token Highlighting Utility Classes */
+.token-keyword, .token.keyword, .hl-keyword { color: var(--token-keyword); font-weight: 600; }
+.token-string, .token.string, .hl-string { color: var(--token-string); }
+.token-function, .token.function, .hl-function { color: var(--token-function); }
+.token-variable, .token.variable, .hl-variable { color: var(--token-variable); }
+.token-comment, .token.comment, .hl-comment { color: var(--token-comment); font-style: italic; }
+.token-number, .token.number, .hl-number { color: var(--token-number); }
+.token-operator, .token.operator, .hl-operator { color: var(--token-operator); }
+.token-type, .token.type, .hl-type { color: var(--token-type); }
+

@@ -127,7 +127,7 @@
 
 .nav-island:hover,
 .nav-island:focus-within {
-  width: min(440px, calc(100vw - 76px));
+  width: min(520px, calc(100vw - 76px));
   border-color: rgba(255, 255, 255, .16);
   background: rgba(17, 17, 20, .88);
   box-shadow: 0 12px 36px rgba(0, 0, 0, .28), 0 0 22px rgba(225, 230, 240, .08);

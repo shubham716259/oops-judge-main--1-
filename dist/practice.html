@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07070d">
+  <title>Code-Karo.dev — Java Practice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/app.css">
+  <link rel="stylesheet" href="/theme.css">
+  <script src="/theme.js"></script>
+</head>
+<body>
+  <!-- 1. TOP BAR (Fixed 48px) -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <a class="topbar-github" href="https://github.com/rajeevranjan4812-star/oops-judge" target="_blank" rel="noopener noreferrer" aria-label="Open the Code-Karo.dev GitHub repository" title="GitHub repository">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.53v-2.08c-3.1.67-3.75-1.32-3.75-1.32-.5-1.28-1.24-1.62-1.24-1.62-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15 1 .1.76 2.68 3.76 2.03.1-.72.39-1.21.7-1.49-2.48-.28-5.09-1.24-5.09-5.52 0-1.22.44-2.21 1.15-2.99-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.05 1.14a10.6 10.6 0 0 1 5.55 0c2.11-1.44 3.05-1.14 3.05-1.14.61 1.54.23 2.68.11 2.96.72.78 1.15 1.77 1.15 2.99 0 4.29-2.61 5.24-5.1 5.51.4.35.75 1.02.75 2.06V22c0 .29.2.63.76.53A11.1 11.1 0 0 0 12 .9Z"/></svg>
+      </a>
+      <a class="brand" href="/" aria-label="Code-Karo.dev home">
+        <span class="brand-mark" aria-hidden="true">&lt;/&gt;</span>
+        <span>Code-Karo<span class="brand-muted">.dev</span></span>
+      </a>
+      <button id="problem-list-btn" class="topbar-btn problem-list-toggle" title="Browse problems (/)">
+        <span class="btn-icon">☰</span>
+        <span>Problem List</span>
+      </button>
+      <a href="/dashboard" class="topbar-btn" title="Open Dashboard" style="text-decoration:none;">
+        <span class="btn-icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <div class="problem-nav-group">
+        <button id="prev-problem-btn" class="topbar-icon-btn" title="Previous problem" disabled aria-label="Previous problem">‹</button>
+        <button id="next-problem-btn" class="topbar-icon-btn" title="Next problem" disabled aria-label="Next problem">›</button>
+        <button id="random-problem-btn" class="topbar-icon-btn" title="Pick random problem" aria-label="Pick random problem">🔀</button>
+      </div>
+      <div class="topbar-credits">Made By Shubham and  Rajeev</div>
+    </div>
+
+    <div class="topbar-center">
+      <div class="run-submit-group" role="group" aria-label="Code execution controls">
+        <button id="run-button" class="btn-segmented btn-run" disabled title="Run on sample tests (Ctrl+Enter)">
+          <span class="play-icon">▶</span> Run
+        </button>
+        <button id="submit-button" class="btn-segmented btn-submit" disabled title="Submit all tests (Ctrl+Shift+Enter)">
+          Submit
+        </button>
+      </div>
+    </div>
+
+    <div class="topbar-right">
+      <div class="runner-indicator-wrap" title="Runner connection status">
+        <span id="runner-status-dot" class="status-dot"></span>
+        <span id="runner-status-text">Connecting…</span>
+      </div>
+      <button class="theme-switch theme-switch--compact" data-theme-switch type="button" aria-label="Switch theme" aria-pressed="false">
+        <svg class="theme-switch__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <g class="theme-switch__sun-rays" stroke="currentColor" stroke-linecap="round" stroke-width="1.7">
+            <circle cx="12" cy="12" r="3.7" fill="currentColor" stroke="none" />
+            <path d="M12 2.5v2M12 19.5v2M4.4 4.4l1.4 1.4m12.4 12.4 1.4 1.4M2.5 12h2m15 0h2M4.4 19.6l1.4-1.4M18.2 5.8l1.4-1.4" />
+          </g>
+          <g class="theme-switch__moon">
+            <circle cx="12" cy="12" r="7.5" fill="currentColor" />
+            <circle class="theme-switch__moon-cutout" cx="16" cy="8" r="6" />
+          </g>
+        </svg>
+        <span class="theme-switch__label" data-theme-label>Dark</span>
+      </button>
+      <button id="settings-btn" class="topbar-icon-btn" title="Settings (Java Compiler & Environment)" aria-label="Settings">⚙</button>
+      <button id="fullscreen-app-btn" class="topbar-icon-btn" title="Toggle app fullscreen" aria-label="Toggle fullscreen">⛶</button>
+
+      <!-- Auth Controls (Guest vs Signed-in) -->
+      <div id="auth-actions" class="auth-actions">
+        <div id="guest-auth-btns" class="guest-auth-btns">
+          <button id="signin-btn" class="topbar-btn auth-btn-signin" type="button">Sign in</button>
+          <button id="signup-btn" class="button button-primary auth-btn-signup" type="button">Sign up</button>
+        </div>
+        <div id="user-menu-container" class="user-menu-container" hidden>
+          <button id="user-menu-btn" class="user-menu-btn" type="button" aria-haspopup="true" aria-expanded="false" title="Account menu">
+            <span id="user-avatar" class="user-avatar">CK</span>
+            <span id="user-handle" class="user-handle">@user</span>
+            <span class="user-menu-caret">▾</span>
+          </button>
+          <div id="user-menu-dropdown" class="user-menu-dropdown" hidden>
+            <div class="user-menu-header">
+              <span class="user-menu-name" id="user-dropdown-name">Username</span>
+              <span class="user-menu-badge" id="user-dropdown-solved">0 / 41 solved</span>
+            </div>
+            <div class="user-menu-sep"></div>
+            <a class="user-menu-item" href="/profile">
+              <span class="item-icon">◷</span>
+              <span>Profile</span>
+            </a>
+            <div class="user-menu-sep"></div>
+            <button id="logout-btn" class="user-menu-item user-logout-btn" type="button">
+              <span class="item-icon">🚪</span>
+              <span>Logout</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. SLIDE-IN PROBLEM DRAWER & BACKDROP -->
+  <div id="drawer-backdrop" class="drawer-backdrop" hidden></div>
+  <aside id="problem-drawer" class="problem-drawer" aria-label="Problem list drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <div class="drawer-title-row">
+        <div>
+          <div class="eyebrow">STRUCTURED LIBRARY</div>
+          <h2>Problems <span id="problem-count" class="count-pill">0 / 41 solved</span></h2>
+          <div id="difficulty-mini-counts" class="difficulty-mini-counts">
+            <span class="mini-easy" id="mini-easy-count">0/14 Easy</span> • 
+            <span class="mini-med" id="mini-med-count">0/21 Med</span> • 
+            <span class="mini-hard" id="mini-hard-count">0/6 Hard</span>
+          </div>
+        </div>
+        <div class="drawer-header-actions">
+          <button id="refresh-button" class="icon-button" title="Refresh problem list" aria-label="Refresh problem list">↻</button>
+          <button id="drawer-close-btn" class="icon-button drawer-close-btn" title="Close drawer (Esc)" aria-label="Close drawer">✕</button>
+        </div>
+      </div>
+
+      <!-- Drawer Tabs: Problems | Paths | Collections -->
+      <div class="drawer-nav-tabs" role="tablist">
+        <button id="tab-btn-problems" class="drawer-nav-tab active" data-tab="problems" type="button" role="tab" aria-selected="true">Problems</button>
+        <button id="tab-btn-paths" class="drawer-nav-tab" data-tab="paths" type="button" role="tab" aria-selected="false">Learning Paths</button>
+        <button id="tab-btn-collections" class="drawer-nav-tab" data-tab="collections" type="button" role="tab" aria-selected="false">Collections</button>
+      </div>
+
+      <!-- Search Bar -->
+      <label class="search-box">
+        <span aria-hidden="true">⌕</span>
+        <input id="problem-search" type="search" placeholder="Search by name, topic, slug, or #ID (/)" autocomplete="off">
+        <kbd>/</kbd>
+      </label>
+
+      <!-- Filter Controls (for Problems tab) -->
+      <div id="drawer-filters-section" class="drawer-filters-section">
+        <div class="filter-controls">
+          <div class="filter-row">
+            <select id="language-filter" class="filter-select" aria-label="Filter by language">
+              <option value="all">Language: All</option>
+              <option value="Java">Java</option>
+              <option value="Python">Python</option>
+              <option value="C++">C++</option>
+              <option value="C">C</option>
+            </select>
+            <select id="difficulty-filter" class="filter-select" aria-label="Filter by difficulty">
+              <option value="all">Difficulty: All</option>
+              <option value="Easy">Easy</option>
+              <option value="Medium">Medium</option>
+              <option value="Hard">Hard</option>
+            </select>
+          </div>
+          <div class="filter-row">
+            <select id="status-filter" class="filter-select" aria-label="Filter by status">
+              <option value="all">Status: All</option>
+              <option value="solved">Solved</option>
+              <option value="attempted">Attempted</option>
+              <option value="unsolved">Unsolved</option>
+              <option value="bookmarked">Bookmarked</option>
+            </select>
+            <select id="sort-filter" class="filter-select" aria-label="Sort problems">
+              <option value="alphabetical">Sort: Alphabetical</option>
+              <option value="path">Sort: Path Order</option>
+              <option value="difficulty">Sort: Difficulty</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Topics Multi-Select Chips Container with counts -->
+        <div class="topic-filter-chips-wrap">
+          <div class="topic-chips-label">Topics:</div>
+          <div id="topic-chips-container" class="topic-chips-container"></div>
+        </div>
+
+        <!-- Active Filter Chips -->
+        <div id="active-filters-bar" class="active-filters-bar" hidden>
+          <div id="active-chips-list" class="active-chips-list"></div>
+          <button id="clear-all-filters-btn" class="clear-filters-btn" type="button">Clear all</button>
+        </div>
+      </div>
+
+      <div class="list-label" id="list-label-row">
+        <span id="list-tab-title">ALL PROBLEMS</span> <span id="visible-count"></span>
+      </div>
+    </div>
+
+    <!-- Drawer Body -->
+    <div class="drawer-body">
+      <nav id="problem-list" class="problem-list drawer-view active" aria-label="Problems"></nav>
+      <div id="paths-list" class="paths-list drawer-view" aria-label="Learning Paths" hidden></div>
+      <div id="collections-list" class="collections-list drawer-view" aria-label="Collections" hidden></div>
+    </div>
+
+    <div class="drawer-footer">
+      <span class="footer-icon">⌘</span>
+      <div><strong>Java 11+</strong><span>Local compiler</span></div>
+    </div>
+  </aside>
+
+  <!-- 3. MAIN WORKSPACE (2 Columns with Splitters) -->
+  <main id="workspace" class="workspace-layout" data-mobile-active="description">
+    <!-- LEFT PANEL: Problem Statement / Tabs -->
+    <section id="problem-panel" class="panel problem-panel" aria-label="Problem Description">
+      <div class="panel-header left-panel-header">
+        <div class="panel-tabs">
+          <button class="panel-tab active" data-left-tab="description">Description</button>
+          <button class="panel-tab" data-left-tab="submissions">Submissions</button>
+          <button class="panel-tab" data-left-tab="hints">Hints</button>
+        </div>
+        <div class="panel-header-actions">
+          <span id="problem-id" class="problem-id-tag"></span>
+          <button id="collapse-left-btn" class="panel-action-btn" title="Collapse panel" aria-label="Collapse left panel">◀</button>
+        </div>
+      </div>
+      <div class="left-panel-content">
+        <div id="tab-content-description" class="tab-pane active">
+          <!-- Description Skeleton Loading Shimmer -->
+          <div id="description-skeleton" class="description-skeleton" hidden>
+            <div class="skeleton-line sk-title"></div>
+            <div class="skeleton-meta-row">
+              <div class="skeleton-pill"></div>
+              <div class="skeleton-chip"></div>
+              <div class="skeleton-chip"></div>
+            </div>
+            <div class="skeleton-line sk-p sk-w90"></div>
+            <div class="skeleton-line sk-p sk-w80"></div>
+            <div class="skeleton-line sk-p sk-w60"></div>
+            <div class="skeleton-card"></div>
+          </div>
+
+          <!-- Description Error State with Retry -->
+          <div id="description-error" class="description-error-card" hidden>
+            <div class="error-card-icon">⚠</div>
+            <div class="error-card-title">Failed to load problem</div>
+            <p id="description-error-msg" class="error-card-msg">There was an issue loading the problem details.</p>
+            <button id="description-retry-btn" class="button button-retry" type="button">↻ Retry</button>
+          </div>
+
+          <!-- Description Header -->
+          <div id="problem-meta-header" class="problem-meta-header" hidden>
+            <div class="problem-title-header">
+              <h1 id="problem-display-title" class="problem-display-title"></h1>
+            </div>
+            <!-- Path & Collection Badges -->
+            <div id="problem-context-row" class="problem-context-row">
+              <span id="problem-path-badge" class="path-step-badge" hidden></span>
+              <div id="problem-collection-badges" class="problem-collection-badges"></div>
+            </div>
+            <div class="problem-meta-controls">
+              <span id="problem-diff-badge" class="diff-badge"></span>
+              <button id="topics-toggle-btn" class="meta-chip topics-chip" type="button" aria-expanded="false" title="Click to view topics">
+                <span class="chip-icon">🏷</span>
+                <span>Topics</span>
+                <span class="chip-arrow">▾</span>
+              </button>
+              <button id="hints-toggle-btn" class="meta-chip hints-chip" type="button" aria-expanded="false" title="Click to reveal hints" hidden>
+                <span class="chip-icon">💡</span>
+                <span id="hints-chip-label">Hint</span>
+                <span class="chip-arrow">▾</span>
+              </button>
+              <button id="problem-bookmark-btn" class="meta-chip bookmark-chip" type="button" title="Bookmark problem" aria-label="Bookmark problem">
+                <span class="bookmark-icon">☆</span>
+                <span class="bookmark-text">Bookmark</span>
+              </button>
+            </div>
+            <div id="problem-topics-list" class="topic-tags-list" hidden></div>
+            <div id="problem-hints-drawer" class="hints-drawer" hidden></div>
+
+            <!-- Next Problem Celebration Banner on Solved -->
+            <div id="solved-celebration-banner" class="solved-celebration-banner" hidden>
+              <div class="banner-left">
+                <span class="celebration-icon">🎉</span>
+                <div>
+                  <div class="banner-title">Problem Solved!</div>
+                  <div class="banner-sub" id="banner-next-name">Up next: Next Challenge</div>
+                </div>
+              </div>
+              <button id="banner-next-btn" class="button button-success-neon" type="button">Next problem ➔</button>
+            </div>
+          </div>
+
+          <div id="welcome-state" class="welcome-state">
+            <div class="welcome-icon">{ }</div>
+            <div class="eyebrow">YOUR NEXT CHALLENGE</div>
+            <h2>Pick a problem.<br><span>Write a solution.</span></h2>
+            <p>Choose any exercise from the list to read its prompt, edit your Java solution, and run it against the included tests.</p>
+          </div>
+
+          <div id="not-found-state" class="welcome-state" hidden>
+            <div class="welcome-icon">?</div>
+            <div class="eyebrow">404 NOT FOUND</div>
+            <h2>Problem not found</h2>
+            <p id="not-found-msg">The problem specified in the URL does not exist or was moved.</p>
+            <button id="not-found-pick-btn" class="button button-primary" style="margin-top: 14px;">Browse problems</button>
+          </div>
+
+          <article id="problem-description" class="markdown-body" hidden></article>
+
+          <!-- Problem Bottom Action Bar -->
+          <footer id="problem-footer-bar" class="problem-footer-bar" hidden>
+            <div class="footer-status-wrap">
+              <span class="footer-status-label">Status:</span>
+              <span id="problem-status-pill" class="footer-status-pill todo">
+                <span class="status-indicator-dot"></span>
+                <span id="problem-status-text">Todo</span>
+              </span>
+            </div>
+            <div class="footer-actions-wrap">
+              <button id="copy-problem-link-btn" class="copy-link-btn" type="button" title="Copy problem URL to clipboard">
+                <span class="copy-icon">🔗</span>
+                <span id="copy-link-label">Copy link</span>
+              </button>
+            </div>
+          </footer>
+        </div>
+        <div id="tab-content-submissions" class="tab-pane" hidden>
+          <div id="submissions-container" class="submissions-container">
+            <!-- Dynamically populated: guest prompt, empty state, or list of submissions -->
+          </div>
+        </div>
+        <div id="tab-content-hints" class="tab-pane" hidden>
+          <div class="placeholder-tab-pane">
+            <div class="placeholder-icon">💡</div>
+            <h3>Problem Hints</h3>
+            <p>Review the problem constraints, input format, and test case edge cases carefully. Use standard Java OOP principles and handle boundary conditions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Collapsed Left Panel Expand Tab -->
+    <button id="expand-left-btn" class="expand-left-strip" title="Expand Description Panel" aria-label="Expand description panel" hidden>
+      <span>▶ Description</span>
+    </button>
+
+    <!-- VERTICAL SPLITTER (col-resize) -->
+    <div id="splitter-vertical" class="splitter splitter-vertical" role="separator" tabindex="0" aria-orientation="vertical" aria-label="Resize left and right panels" title="Drag to resize, double-click to reset">
+      <div class="splitter-handle"></div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div id="right-column" class="right-column">
+      <!-- TOP: Editor Panel -->
+      <section id="editor-panel" class="panel editor-panel" aria-label="Java Code Editor">
+        <div class="panel-header editor-header">
+          <div class="file-tab">
+            <span class="java-icon">J</span> Solution.java <span id="dirty-indicator" class="dirty-indicator" hidden>●</span>
+          </div>
+          <div class="editor-toolbar-actions">
+            <span id="save-status" class="save-status" aria-live="polite"></span>
+            <div class="theme-select-wrap" title="Editor Theme">
+              <svg class="theme-select-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/>
+                <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
+                <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/>
+                <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
+                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 9.5 10c.93 0 1.5-.68 1.5-1.5 0-.38-.15-.74-.39-1.01-.24-.26-.38-.61-.38-1 0-.83.67-1.5 1.5-1.5H16c3.31 0 6-2.69 6-6 0-5.52-4.5-10-10-10z"/>
+              </svg>
+              <select id="editor-theme-select" class="editor-theme-select" aria-label="Select Editor Theme">
+                <option value="night-owl" selected>Night Owl (Italic)</option>
+                <option value="material-darker">Material Theme Darker</option>
+                <option value="aura-dark">Aura Dark Theme</option>
+                <option value="andromeda">Andromeda</option>
+                <option value="tokyo-night-storm">Tokyo Night Storm</option>
+              </select>
+              <span class="theme-select-chevron" aria-hidden="true">▼</span>
+            </div>
+            <div class="font-controls" title="Adjust font size">
+              <button id="font-decrease" class="font-btn" aria-label="Decrease font size">A−</button>
+              <button id="font-increase" class="font-btn" aria-label="Increase font size">A+</button>
+            </div>
+            <button id="reset-button" class="button button-ghost" title="Reset to problem starter code" disabled>↺ Reset</button>
+            <button id="save-button" class="button button-secondary" disabled>Save</button>
+            <button id="maximize-editor-btn" class="panel-action-btn" title="Maximize editor" aria-label="Maximize editor">⤢</button>
+            <button id="fullscreen-editor-btn" class="panel-action-btn" title="Fullscreen editor (Esc exits)" aria-label="Fullscreen editor">⛶</button>
+          </div>
+        </div>
+        <div class="code-area" id="editor-container-wrap">
+          <div id="monaco-editor" class="monaco-container"></div>
+          <div id="fallback-editor-wrap" class="fallback-wrap" hidden>
+            <div id="fallback-banner" class="fallback-banner" style="display:flex;align-items:center;justify-content:space-between;">
+              <span>⚠ Monaco Editor could not be loaded from CDN. Using fallback textarea editor.</span>
+              <button type="button" id="retry-monaco-btn" class="button button-ghost" style="height:20px;padding:0 8px;font-size:11px;margin-left:8px;border-color:currentColor;">↺ Retry Monaco</button>
+            </div>
+            <div class="fallback-textarea-row">
+              <div id="line-numbers" class="line-numbers" aria-hidden="true">1</div>
+              <textarea id="code-editor" aria-label="Java code editor" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" disabled></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="editor-statusbar">
+          <span class="statusbar-save-group">
+            <span id="save-dot" class="save-dot" title="Saved"></span>
+            <span id="statusbar-save-text">Saved</span>
+          </span>
+          <span class="statusbar-sep">|</span>
+          <span class="statusbar-lang">Java</span>
+          <span class="statusbar-sep">|</span>
+          <span class="statusbar-indent">Spaces: 4</span>
+          <span class="statusbar-spacer"></span>
+          <span id="cursor-position">Ln 1, Col 1</span>
+        </div>
+      </section>
+
+      <!-- HORIZONTAL SPLITTER (row-resize) -->
+      <div id="splitter-horizontal" class="splitter splitter-horizontal" role="separator" tabindex="0" aria-orientation="horizontal" aria-label="Resize editor and console panels" title="Drag to resize, double-click to reset">
+        <div class="splitter-handle"></div>
+      </div>
+
+      <!-- BOTTOM: Console Panel -->
+      <section id="console-panel" class="panel console-panel" aria-label="Test Results">
+        <div class="panel-header console-header">
+          <div class="console-tabs">
+            <button class="console-tab" data-console-tab="testcase">Testcase</button>
+            <button class="console-tab active" data-console-tab="result">Test Result</button>
+          </div>
+          <div class="console-header-right">
+            <span id="run-duration" class="run-duration"></span>
+            <button id="collapse-console-btn" class="panel-action-btn" title="Toggle console height" aria-label="Toggle console height">▼</button>
+          </div>
+        </div>
+        <div id="console-content-wrap" class="console-content-wrap">
+          <div id="console-testcase-pane" class="console-pane" hidden>
+            <div class="testcase-tab-view">
+              <div class="testcase-subtabs-row">
+                <div id="sample-case-tabs" class="sample-case-tabs" role="tablist" aria-label="Sample test case tabs"></div>
+                <div class="custom-case-placeholder" title="Custom inputs will be supported in an upcoming update">
+                  <span class="custom-case-tag">+ Custom Testcase <small>(coming soon)</small></span>
+                </div>
+              </div>
+              <div id="sample-case-detail" class="sample-case-detail">
+                <!-- Dynamically rendered active sample testcase -->
+              </div>
+            </div>
+          </div>
+          <div id="console-result-pane" class="console-pane active">
+            <div id="console-output" class="console-output">
+              <div class="console-empty-state">
+                <div class="empty-icon-mug">☕</div>
+                <div class="empty-title">You must run your code first</div>
+                <div class="empty-desc">Click <strong>Run (▶)</strong> for sample tests or <strong>Submit</strong> to evaluate all test cases.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- TOAST NOTIFICATIONS CONTAINER -->
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- KEYBOARD SHORTCUTS MODAL (?) -->
+  <dialog id="shortcuts-modal" class="shortcuts-modal" aria-labelledby="shortcuts-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-row">
+          <span class="modal-icon">⌨</span>
+          <h2 id="shortcuts-title">Keyboard Shortcuts</h2>
+        </div>
+        <button id="shortcuts-close-btn" class="icon-button modal-close-btn" type="button" aria-label="Close shortcuts modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="shortcut-list">
+          <div class="shortcut-item">
+            <span class="shortcut-action">Run sample tests</span>
+            <span class="shortcut-keys"><kbd>Ctrl</kbd> + <kbd>Enter</kbd></span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-action">Submit all tests</span>
+            <span class="shortcut-keys"><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd></span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-action">Search problem catalogue</span>
+            <span class="shortcut-keys"><kbd>/</kbd></span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-action">Save solution code</span>
+            <span class="shortcut-keys"><kbd>Ctrl</kbd> + <kbd>S</kbd></span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-action">Exit fullscreen / Close modal</span>
+            <span class="shortcut-keys"><kbd>Esc</kbd></span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-action">Toggle keyboard shortcuts help</span>
+            <span class="shortcut-keys"><kbd>?</kbd></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- AUTHENTICATION MODAL (Sign in / Sign up) -->
+  <dialog id="auth-modal" class="shortcuts-modal auth-modal" aria-labelledby="auth-modal-title">
+    <div class="modal-card auth-modal-card">
+      <div class="modal-header">
+        <div class="modal-title-row">
+          <span class="modal-icon">🔐</span>
+          <h2 id="auth-modal-title">Sign in to Code-Karo.dev</h2>
+        </div>
+        <button id="auth-modal-close" class="icon-button modal-close-btn" type="button" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body auth-modal-body">
+        <div class="auth-tabs-row" role="tablist">
+          <button type="button" id="auth-tab-signin" class="auth-tab active" role="tab" aria-selected="true">Sign In</button>
+          <button type="button" id="auth-tab-signup" class="auth-tab" role="tab" aria-selected="false">Sign Up</button>
+        </div>
+
+        <div id="auth-error-box" class="auth-error-box" hidden></div>
+
+        <form id="auth-form" class="auth-form" onsubmit="return false;">
+          <div class="form-group">
+            <label for="auth-username" class="form-label">Username</label>
+            <input type="text" id="auth-username" class="form-input" placeholder="e.g. shubham" autocomplete="username" required>
+          </div>
+          <div class="form-group">
+            <label for="auth-password" class="form-label">Password</label>
+            <input type="password" id="auth-password" class="form-input" placeholder="Enter password" autocomplete="current-password" required>
+          </div>
+          <div class="form-group" id="confirm-password-group" hidden>
+            <label for="auth-confirm-password" class="form-label">Confirm Password</label>
+            <input type="password" id="auth-confirm-password" class="form-input" placeholder="Confirm password" autocomplete="new-password">
+          </div>
+
+          <div id="auth-demo-note" class="auth-demo-note">
+            <span class="note-icon">ℹ</span>
+            <span>Accounts are stored only in this browser (demo).</span>
+          </div>
+
+          <button type="submit" id="auth-submit-btn" class="button button-primary auth-submit-btn">
+            Sign In
+          </button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- SUBMISSION CODE VIEWER MODAL -->
+  <dialog id="view-code-modal" class="shortcuts-modal code-viewer-modal" aria-labelledby="code-modal-title">
+    <div class="modal-card code-modal-card">
+      <div class="modal-header">
+        <div class="modal-title-row">
+          <span class="modal-icon">📄</span>
+          <h2 id="code-modal-title">Submission Code</h2>
+        </div>
+        <button id="view-code-close-btn" class="icon-button modal-close-btn" type="button" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body code-modal-body">
+        <div class="code-modal-meta-row">
+          <span id="code-modal-verdict" class="diff-badge">Accepted</span>
+          <span id="code-modal-runtime" class="meta-pill">Runtime: —</span>
+          <span id="code-modal-passed" class="meta-pill">— passed</span>
+          <span id="code-modal-time" class="meta-pill" style="color:var(--text-muted)">—</span>
+        </div>
+        <div class="code-block-wrap" style="margin-top: 10px;">
+          <div class="code-block-header">
+            <span class="code-block-lang">Java (Solution.java)</span>
+            <button type="button" id="copy-submitted-code-btn" class="code-copy-btn">Copy</button>
+          </div>
+          <pre class="submitted-code-pre" style="max-height: 340px; overflow: auto; padding: 12px; margin: 0; background: var(--bg-surface); font-family: var(--font-mono); font-size: 13px; line-height: 1.5; color: var(--text-primary);"><code id="code-modal-pre"></code></pre>
+        </div>
+        <div class="code-modal-footer" style="margin-top: 14px; display: flex; justify-content: flex-end; gap: 8px;">
+          <button type="button" id="restore-from-modal-btn" class="button button-secondary">↺ Restore to editor</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 4. MOBILE BOTTOM TAB BAR (< 900px) -->
+  <nav id="mobile-tab-bar" class="mobile-tab-bar" aria-label="Mobile navigation">
+    <button class="mobile-tab-btn active" data-mobile-view="description"><span class="mobile-tab-icon">📄</span><span>Description</span></button>
+    <button class="mobile-tab-btn" data-mobile-view="code"><span class="mobile-tab-icon">💻</span><span>Code</span></button>
+    <button class="mobile-tab-btn" data-mobile-view="result"><span class="mobile-tab-icon">📊</span><span>Result</span></button>
+  </nav>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/11.1.1/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.8/purify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js" onerror="window.monacoLoadError = true;"></script>
+  <script src="/config.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

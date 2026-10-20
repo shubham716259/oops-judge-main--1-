@@ -1,0 +1,375 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap");
+
+/* ==========================================================================
+   Code Karo Design System Tokens
+   Linear / Vercel / Raycast aesthetic.
+   No gradients. No box-shadows. No glow. No blur.
+   ========================================================================== */
+
+:root {
+  /* Canvas layers: Midnight Graphite palette */
+  --canvas:         #111210;   /* main background */
+  --canvas-raised:  #1B1B19;   /* card background */
+  --canvas-overlay: #292824;   /* elevated surface, nested panels */
+  --canvas-hover:   #252420;   /* interactive hover tint */
+
+  /* Legacy aliases */
+  --bg:        var(--canvas);
+  --surface:   var(--canvas-raised);
+  --surface-2: var(--canvas-overlay);
+
+  /* Structural border scale */
+  --line-subtle:  #34332F;
+  --line-dim:     #34332F;
+  --line-strong:  #484640;
+
+  /* Legacy alias */
+  --border: #34332F;
+
+  /* Ink text scale */
+  --ink-primary:   #F5F3EF;   /* primary text */
+  --ink-secondary: #A7A39B;   /* secondary text */
+  --ink-muted:     #737069;
+  --ink-ghost:     #3A3935;
+
+  /* Legacy aliases */
+  --text:  var(--ink-primary);
+  --muted: var(--ink-secondary);
+
+  /* Electric Coral accent */
+  --accent:        #FF795E;   /* primary coral */
+  --accent-hover:  #FF927A;   /* coral hover */
+  --accent-active: #E06349;   /* pressed state */
+  --accent-muted:  rgba(255, 121, 94, 0.12);
+  --accent-text:   var(--accent);
+
+  /* Status semantic tokens */
+  --easy:    #55D6A0;
+  --medium:  #E5A93C;
+  --hard:    #FF646E;
+  --info:    #76A9FF;
+
+  /* Verdict semantic tokens */
+  --verdict-accepted:    #55D6A0;
+  --verdict-accepted-bg: rgba(85, 214, 160, 0.12);
+  --verdict-warning:     #E5A93C;
+  --verdict-warning-bg:  rgba(229, 169, 60, 0.12);
+  --verdict-error:       #FF646E;
+  --verdict-error-bg:    rgba(255, 100, 110, 0.12);
+  --verdict-info:        #76A9FF;
+  --verdict-info-bg:     rgba(118, 169, 255, 0.12);
+
+  /* Radius: consistent 10-14px system */
+  --radius:    12px;
+  --radius-sm: 8px;
+  --radius-xs: 6px;
+
+  /* Typography */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "IBM Plex Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Button tokens */
+  --btn-primary-bg:              #FF795E;
+  --btn-primary-bg-hover:        #FF927A;
+  --btn-primary-text:            #111210;
+  --btn-primary-shadow-hover:    0 4px 14px rgba(255, 121, 94, 0.28);
+
+  --btn-secondary-bg:            transparent;
+  --btn-secondary-bg-hover:      #292824;
+  --btn-secondary-border:        #34332F;
+  --btn-secondary-border-hover:  #484640;
+  --btn-secondary-text:          #F5F3EF;
+
+  --btn-ghost-bg:                transparent;
+  --btn-ghost-bg-hover:          rgba(255, 121, 94, 0.10);
+  --btn-ghost-text:              #FF795E;
+  --btn-ghost-border:            transparent;
+
+  --btn-accent-bg:               rgba(255, 121, 94, 0.12);
+  --btn-accent-bg-hover:         rgba(255, 121, 94, 0.22);
+  --btn-accent-border:           rgba(255, 121, 94, 0.25);
+  --btn-accent-border-hover:     rgba(255, 121, 94, 0.45);
+  --btn-accent-text:             #FF795E;
+
+  --btn-danger-bg:               transparent;
+  --btn-danger-bg-hover:         rgba(255, 100, 110, 0.10);
+  --btn-danger-border:           rgba(255, 100, 110, 0.30);
+  --btn-danger-border-hover:     rgba(255, 100, 110, 0.55);
+  --btn-danger-text:             #FF646E;
+
+  --btn-focus-ring: #FF795E;
+}
+
+/* Light theme override */
+[data-theme="light"] {
+  --canvas:         #F7F6F2;
+  --canvas-raised:  #FFFFFF;
+  --canvas-overlay: #F0ECE1;
+  --canvas-hover:   #E8E3D7;
+
+  --bg:        var(--canvas);
+  --surface:   var(--canvas-raised);
+  --surface-2: var(--canvas-overlay);
+
+  --line-subtle:  #E2DDD4;
+  --line-dim:     #D5CFC3;
+  --line-strong:  #BDB6A8;
+
+  --border: #D5CFC3;
+
+  --ink-primary:   #1A1917;
+  --ink-secondary: #635F57;
+  --ink-muted:     #8F8A80;
+  --ink-ghost:     #C5BFA;
+
+  --text:  var(--ink-primary);
+  --muted: var(--ink-secondary);
+
+  --accent:        #E25B3E;
+  --accent-hover:  #FF795E;
+  --accent-active: #C8462B;
+  --accent-muted:  rgba(226, 91, 62, 0.10);
+  --accent-text:   var(--accent);
+
+  --easy:   #1E9E68;
+  --medium: #C48719;
+  --hard:   #D93843;
+  --info:   #3B7CE6;
+
+  --verdict-accepted:    #1E9E68;
+  --verdict-accepted-bg: rgba(30, 158, 104, 0.10);
+  --verdict-warning:     #C48719;
+  --verdict-warning-bg:  rgba(196, 135, 25, 0.10);
+  --verdict-error:       #D93843;
+  --verdict-error-bg:    rgba(217, 56, 67, 0.10);
+  --verdict-info:        #3B7CE6;
+  --verdict-info-bg:     rgba(59, 124, 230, 0.10);
+
+  --btn-secondary-border:       #D5CFC3;
+  --btn-secondary-border-hover: #BDB6A8;
+  --btn-secondary-bg-hover:     #F0ECE1;
+
+  --btn-focus-ring: var(--accent);
+}
+
+/* ==========================================================================
+   Base Reset
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--canvas);
+  color: var(--ink-primary);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* Monospace for all numeric/code elements */
+code, pre, kbd, samp,
+.mono, .rank, .stat-number, .code-font,
+[data-mono] {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   Card primitives
+   ========================================================================== */
+
+/* Base card: grounded surface, no shadow, no glow */
+.ck-card {
+  position: relative;
+  background-color: var(--canvas-raised);
+  border: 1px solid var(--line-subtle);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: none !important;
+  background-image: none !important;
+  min-width: 0;
+}
+
+/* Top-edge accent bar (add class ck-card--accented) */
+.ck-card--accented::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: 1px;
+  background-color: var(--accent);
+  pointer-events: none;
+}
+
+/* Card hover: border brightens slightly, no scale, no shadow */
+.ck-card:hover {
+  border-color: var(--line-dim);
+}
+
+/* Card header: dark canvas base, separated from content */
+.ck-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background-color: var(--canvas);
+  border-bottom: 1px solid var(--line-subtle);
+  gap: 12px;
+}
+
+/* Left marker group: bar + title + mono sub-tag */
+.ck-card__header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+/* Solid 2px left-bar marker (not a glowing dot) */
+.ck-card__marker {
+  display: block;
+  width: 2px;
+  height: 14px;
+  border-radius: 1px;
+  background-color: var(--accent);
+  flex-shrink: 0;
+}
+
+.ck-card__title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ck-card__title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-primary);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+/* Monospace uppercase sub-tag beneath title */
+.ck-card__tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ink-muted);
+  line-height: 1;
+}
+
+.ck-card__header-action {
+  flex-shrink: 0;
+}
+
+/* Card content area */
+.ck-card__content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Inset panel: nested surface within a card */
+.ck-inset {
+  background-color: var(--canvas-overlay);
+  border: 1px solid var(--line-subtle);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+}
+
+/* Stat row: single horizontal data line */
+.ck-stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--line-subtle);
+  font-size: 12px;
+}
+
+.ck-stat-row:last-child {
+  border-bottom: none;
+}
+
+.ck-stat-row__label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-secondary);
+}
+
+.ck-stat-row__value {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Difficulty badge: crisp monospaced tag, no pill */
+.ck-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid;
+  line-height: 1;
+}
+
+.ck-badge--easy {
+  color: var(--easy);
+  background-color: rgba(76, 175, 125, 0.08);
+  border-color: rgba(76, 175, 125, 0.22);
+}
+
+.ck-badge--medium {
+  color: var(--medium);
+  background-color: rgba(212, 151, 58, 0.10);
+  border-color: rgba(212, 151, 58, 0.24);
+}
+
+.ck-badge--hard {
+  color: var(--hard);
+  background-color: rgba(201, 79, 74, 0.08);
+  border-color: rgba(201, 79, 74, 0.22);
+}
+
+/* Focus ring: standard for all interactive elements */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--btn-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Backwards compat for old .card / [data-card] selectors */
+.card, [data-card] {
+  background-color: var(--canvas-raised);
+  border: 1px solid var(--line-subtle);
+  border-radius: var(--radius);
+  box-shadow: none !important;
+  background-image: none !important;
+}
+
+.card:hover, [data-card]:hover {
+  border-color: var(--line-dim);
+  box-shadow: none !important;
+}

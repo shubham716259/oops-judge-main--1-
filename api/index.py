@@ -139,20 +139,24 @@ class handler(BaseHTTPRequestHandler):
             clean = clean[4:]
         if clean.startswith("public/"):
             clean = clean[7:]
-        if clean in ("", "index.html", "problems", "problems.html", "problems.css", "problems.js", "practice", "practice.html", "profile", "profile.html", "app.css", "app.js", "config.js"):
+        if clean in ("problems", "problems.html"):
+            self.send_response(302)
+            self.send_header("Location", "/practice")
+            self.end_headers()
+            return
+
+        if clean in ("", "index.html", "practice", "practice.html", "dashboard", "dashboard.html", "profile", "profile.html", "app.css", "app.js", "config.js"):
             file_name = clean or "index.html"
-            if file_name == "problems":
-                file_name = "problems.html"
-            elif file_name == "practice":
+            if file_name == "practice":
                 file_name = "practice.html"
+            elif file_name == "dashboard":
+                file_name = "dashboard.html"
             elif file_name == "profile":
                 file_name = "profile.html"
             content_types = {
                 "index.html": "text/html; charset=utf-8",
-                "problems.html": "text/html; charset=utf-8",
-                "problems.css": "text/css; charset=utf-8",
-                "problems.js": "application/javascript; charset=utf-8",
                 "practice.html": "text/html; charset=utf-8",
+                "dashboard.html": "text/html; charset=utf-8",
                 "profile.html": "text/html; charset=utf-8",
                 "app.css": "text/css; charset=utf-8",
                 "app.js": "application/javascript; charset=utf-8",

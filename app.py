@@ -209,14 +209,18 @@ class AppHandler(BaseHTTPRequestHandler):
             self.send_json(200, problem)
             return
 
+        if path in ("/problems", "/problems.html"):
+            self.send_response(302)
+            self.send_header("Location", "/practice")
+            self.end_headers()
+            return
+
         norm_path = "/" if not path else path
         static_files = {
             "/": ("index.html", "text/html; charset=utf-8"),
             "/index.html": ("index.html", "text/html; charset=utf-8"),
-            "/problems": ("problems.html", "text/html; charset=utf-8"),
-            "/problems.html": ("problems.html", "text/html; charset=utf-8"),
-            "/problems.css": ("problems.css", "text/css; charset=utf-8"),
-            "/problems.js": ("problems.js", "text/javascript; charset=utf-8"),
+            "/dashboard": ("dashboard.html", "text/html; charset=utf-8"),
+            "/dashboard.html": ("dashboard.html", "text/html; charset=utf-8"),
             "/practice": ("practice.html", "text/html; charset=utf-8"),
             "/practice.html": ("practice.html", "text/html; charset=utf-8"),
             "/profile": ("profile.html", "text/html; charset=utf-8"),
@@ -238,7 +242,20 @@ class AppHandler(BaseHTTPRequestHandler):
             "/app.css": ("app.css", "text/css; charset=utf-8"),
             "/app.js": ("app.js", "text/javascript; charset=utf-8"),
             "/config.js": ("config.js", "text/javascript; charset=utf-8"),
+            "/assets/index.js": ("assets/index.js", "application/javascript; charset=utf-8"),
+            "/assets/index.css": ("assets/index.css", "text/css; charset=utf-8"),
         }
+        if norm_path.startswith("/assets/"):
+            rel_asset = norm_path.lstrip("/")
+            for search_dir in (WEB, ROOT / "dist", ROOT / "public"):
+                candidate = search_dir / rel_asset
+                if candidate.is_file():
+                    content_type = "application/javascript; charset=utf-8" if norm_path.endswith(".js") else ("text/css; charset=utf-8" if norm_path.endswith(".css") else "application/octet-stream")
+                    try:
+                        self.send_bytes(200, candidate.read_bytes(), content_type)
+                        return
+                    except OSError:
+                        pass
         if norm_path not in static_files:
             self.send_json(404, {"error": "Page not found."})
             return
